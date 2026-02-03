@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Search, ShoppingBag, User } from "lucide-react";
 
 export default function Header() {
+  const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -19,11 +23,17 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-8">
           {["SHOP", "CATEGORIES", "NEW ARRIVALS", "ARCHIVES"].map((item) => {
             const href = item === "SHOP" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`;
+            const isActive = pathname === href;
+            
             return (
               <Link
                 key={item}
                 href={href}
-                className="text-xs font-bold tracking-widest text-gray-900 hover:text-blue-600 transition-colors"
+                className={`text-xs font-bold tracking-widest transition-colors ${
+                  isActive 
+                    ? "text-black border-b-2 border-black pb-1" 
+                    : "text-gray-500 hover:text-black"
+                }`}
               >
                 {item}
               </Link>
